@@ -13,11 +13,11 @@ const router= Router();
 
 router.get("/", usuariosGet);
 router.post("/",[check("apellidoynombre","El apellido y nombre es obligatorio").notEmpty(),
-check("contraseña","La contraseña debe tener mas de 6 caracteres").isLength
+check("contrasenia","La contraseña debe tener mas de 6 caracteres").isLength
 ({min:6}),
-check("correo","El correo no es valido").isEmail(),
-check("correo").custom(correoExiste),
-check("rol").custom(esRolValido),
+//check("correo","El correo no es valido").isEmail(),
+//check("correo").custom(correoExiste),
+//check("rol").custom(esRolValido),
 
 validarCampos,
 ],  

@@ -15,13 +15,13 @@ const usuariosGet= (req=request, res=response)=> {
 
 const usuarioPost= async(req=request, res)=> {
     
-    const {apellidoynombre,dni,correo,contraseña,rol}=req.body;
-    const usuario= new Usuario({ apellidoynombre,dni,correo,contraseña,rol});
+    const {apellidoynombre,dni,correo,contrasenia,rol}=req.body;
+    const usuario= new Usuario({ apellidoynombre,dni,correo,contrasenia,rol});
 
     // validar si el email existe
    
     const salt = bcrypt.genSaltSync();
-    usuario.contraseña=bcrypt.hashSync(contraseña,salt);
+    usuario.contrasenia=bcrypt.hashSync(contrasenia,salt);
 
     await usuario.save();
 
@@ -33,7 +33,7 @@ const usuarioPost= async(req=request, res)=> {
 
 const usuarioPut= async (req=request, res)=> {
     const{id}=req.params;
-    const{contraseña,_id,dni, correo,...resto}=req.body;
+    const{contrasenia,_id,dni, correo,...resto}=req.body;
 
     const salt = bcrypt.genSaltSync();
     resto.password=bcrypt.hashSync(password,salt);

@@ -15,21 +15,18 @@ const UsuarioSchema=Schema({
         required:[ true, "El correo es obligatorio"],
         unique: true,  
     },
-    contraseña:{
+    contrasenia:{
         type: String,
         required:[ true, "La contraseña es obligatoria"],
     },
     rol:{
         type: String,
         enum:[ "ADMIN_ROLE","USER_ROLE"],
-        default: "USER_ROLE",   // se guarda por defecto como user role
+        default: "USER_ROLE",   
     },
-    //img:{
-        //type:String, // se toma la direccion url como string
-    //},
-    state:{ // estado
+    estado:{
        type: Boolean,
-       default: true, // significa por defecto estará activo
+       default: true, 
     }
 })
 
