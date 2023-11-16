@@ -2,7 +2,7 @@ const{request, response} = require("express");
 const Usuario= require ("../models/usuario");
 const bcrypt = require('bcryptjs');
 
-//funciones
+
 
 const usuariosGet= (req=request, res=response)=> {
     const {limit,page}=req.query;
@@ -15,13 +15,12 @@ const usuariosGet= (req=request, res=response)=> {
 
 const usuarioPost= async(req=request, res)=> {
     
-    const {apellidoynombre,dni,correo,contrasenia,rol}=req.body;
-    const usuario= new Usuario({ apellidoynombre,dni,correo,contrasenia,rol});
+    const {name,email,dni,password,role}=req.body;
+    const usuario= new Usuario({ name, email,dni, password,role});
 
-    // validar si el email existe
    
     const salt = bcrypt.genSaltSync();
-    usuario.contrasenia=bcrypt.hashSync(contrasenia,salt);
+    usuario.password=bcrypt.hashSync(password,salt);
 
     await usuario.save();
 
@@ -29,11 +28,11 @@ const usuarioPost= async(req=request, res)=> {
      message:"Usuario creado",
      usuario, //toJSON
     });
-  }
+   }
 
 const usuarioPut= async (req=request, res)=> {
     const{id}=req.params;
-    const{contrasenia,_id,dni, correo,...resto}=req.body;
+    const{password,_id, email,...resto}=req.body;
 
     const salt = bcrypt.genSaltSync();
     resto.password=bcrypt.hashSync(password,salt);
@@ -44,7 +43,8 @@ const usuarioPut= async (req=request, res)=> {
      usuario,
     });
     
-  }
+
+   }
 
 const usuarioDelete= (req, res)=> {
     
@@ -53,11 +53,12 @@ const usuarioDelete= (req, res)=> {
     });
    }
 
-module.exports={
+   module.exports={
     usuariosGet,
     usuarioPost,
     usuarioPut,
     usuarioDelete
    }
+
 
 
