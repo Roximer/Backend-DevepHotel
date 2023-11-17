@@ -1,7 +1,7 @@
 const {Router}= require("express");
 const {check}= require("express-validator");
-//const{validarCampos}=require("../middlewares/validar-campos");
-//const{esRoleValido, emailExiste}= require("../helpers/db-validators");
+const{validarCampos}=require("../middlewares/validar-campos");
+
 const { 
     habitacionesGet,
     habitacionPost,
@@ -15,9 +15,8 @@ const router= Router();
   router.post("/",[check("numero","El numero de habitación es obligatorio").notEmpty(),
   check("piso","El número de piso es obligatorio").notEmpty(),
   check("precio","El precio es oblidatorio").notEmpty(),
-  check("tipohab","No es un tipo de habitación válida").isIn([ "ADMIN_ROLE","USER_ROLE"]),
-  //check("email").custom(emailExiste),
-  //check("role").custom(esRoleValido),
+  check("tipohab","No es un tipo de habitación válida").isIn([ "SINGLE","DOBLE","TRIPLE"]),
+  
 
   validarCampos,
 ],  

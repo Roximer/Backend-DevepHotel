@@ -1,11 +1,11 @@
 const{request, response} = require("express");
-const Usuario= require ("../models/habitación");
+const Habitación= require ("../models/habitación");
 
 
 const habitacionesGet= (req=request, res=response)=> {
     const {limit,page}=req.query;
     res.json({
-     message:"GET usuarios- Controllers",
+     message:"GET habitación- Controllers",
      limit,
      page,
     });
@@ -20,7 +20,7 @@ const habitaciónPost= async(req=request, res)=> {
     await habitación.save();
 
     res.status(201).json({
-     message:"Usuario creado",
+     message:"Habitación creado",
      usuario, //toJSON
     });
    }
@@ -43,7 +43,7 @@ const habitaciónPut= async (req=request, res)=> {
 const habitaciónDelete= (req, res)=> {
     
     res.json({
-     message:"DELETE usuarios- Controllers",
+     message:"DELETE habitación- Controllers",
     });
    }
 
