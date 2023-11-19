@@ -17,9 +17,8 @@ const router= Router();
   check("password","La contraseña debe tener mas de 6 caracteres").isLength
   ({min:6}),
   check("email","El mail no es valido").isEmail(),
-  check("role","No es un rol válido").isIn([ "ADMIN_ROLE","USER_ROLE"]),
   check("email").custom(emailExiste),
-  //check("role").custom(esRoleValido),
+  check("role").custom(esRoleValido),
 
   validarCampos,
 ],  
