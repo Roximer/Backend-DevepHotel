@@ -12,6 +12,7 @@ const {
 const router= Router();
 
   router.get("/", usuariosGet);
+
   router.post("/",[check("name","El nombre es obligatorio").notEmpty(),
   check("dni","El dni es obligatorio").notEmpty(),
   check("password","La contraseña debe tener mas de 6 caracteres").isLength
@@ -23,6 +24,7 @@ const router= Router();
   validarCampos,
 ],  
  usuarioPost);
+ 
   router.put("/:id",[
     check("id","No es un Id válido").isMongoId(),
     check("id").custom(existeUsuarioPorId),
@@ -32,7 +34,9 @@ const router= Router();
   ],
   usuarioPut);
 
-  router.delete("/", usuarioDelete);
+  router.delete("/:id",[check("id","No es un Id válido").isMongoId(),
+  check("id").custom(existeUsuarioPorId),validarCampos],
+  usuarioDelete);
 
     module.exports=router;
 

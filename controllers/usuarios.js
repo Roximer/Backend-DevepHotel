@@ -4,12 +4,19 @@ const bcrypt = require('bcryptjs');
 
 
 
-const usuariosGet= (req=request, res=response)=> {
-    const {limit,page}=req.query;
-    res.json({
-     message:"GET usuarios- Controllers",
-     limit,
-     page,
+const usuariosGet= async (req=request, res=response)=> {
+    const {limite=5,desde=0}=req.query;
+    
+    //const usuarios= await Usuario.find().limit(limite).skip(desde);
+    //const total= await Usuario.countDocuments();
+
+    const[total,usuarios] = await Promise.all([
+      Usuario.countDocuments({state:true}),
+      Usuario.find({state:true}).limit(limite).skip(desde),  
+    ])
+    res.status(200).json({
+     total,   
+     usuarios,
     });
    }
 
@@ -46,10 +53,16 @@ const usuarioPut= async (req=request, res)=> {
     });
     };
 
-const usuarioDelete= (req, res)=> {
-    
-    res.json({
-     message:"DELETE usuarios- Controllers",
+const usuarioDelete= async (req, res)=> {
+    const{id}=req.params;
+
+    //const usuarioBorrado = await Usuario.findByIdAndDelete(id);
+    const usuarioBorrado =await Usuario.findByIdAndUpdate(id,{
+        state:false},{new:true}
+    );
+    res.status(200).json({
+     message:"Usuario eliminado",
+     usuarioBorrado,
     });
    }
 
