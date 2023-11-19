@@ -21,6 +21,7 @@ const usuarioPost= async(req=request, res)=> {
    
     const salt = bcrypt.genSaltSync();
     usuario.password=bcrypt.hashSync(password,salt);
+    
 
     await usuario.save();
 
