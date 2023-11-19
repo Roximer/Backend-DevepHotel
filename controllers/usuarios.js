@@ -29,23 +29,22 @@ const usuarioPost= async(req=request, res)=> {
      message:"Usuario creado",
      usuario, //toJSON
     });
-   }
+   };
 
 const usuarioPut= async (req=request, res)=> {
     const{id}=req.params;
-    const{password,_id, email,...resto}=req.body;
+    const{password,_id, email, ...resto}=req.body;
 
     const salt = bcrypt.genSaltSync();
     resto.password=bcrypt.hashSync(password,salt);
-    const usuario=await Usuario.findByIdAndUpdate(id,resto,{new:true});
+
+    const usuario=await Usuario.findByIdAndUpdate(id,resto, {new:true});
 
     res.status(200).json({
      message:"Usuario actualizado",
      usuario,
     });
-    
-
-   }
+    };
 
 const usuarioDelete= (req, res)=> {
     

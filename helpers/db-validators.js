@@ -15,14 +15,15 @@ const Usuario= require ("../models/usuario");
       throw new Error (`El correo ${email} ya esta registrado en la BD`); 
 }
 }
-   /* const existeUsuarioPorId= async(id)=>{
-    const existeUsuarioPorId= await Usuario.findById(id)
-    if (existeEmail){
-      throw new Error (`El correo ${email} ya esta registrado en la BD`); 
+   const existeUsuarioPorId= async(id)=>{
+    const existeUsuario = await Usuario.findById(id)
+    if (!existeUsuario){
+      throw new Error (`El id ${id} no existe `); 
    }
-   } */
+   } 
     module.exports={
         esRoleValido, 
         emailExiste, 
+        existeUsuarioPorId
     }
   
