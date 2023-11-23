@@ -6,7 +6,7 @@ const { generarJWT } = require("../helpers/generar-jwt");
 
 
 const login=async (req=request , res=response)=>{
-   const{ email,password,codigo}=req.body;
+   const{ email,password}=req.body;
     try {
       //verificar si el email existe
       const usuario = await Usuario.findOne({email});
@@ -52,7 +52,7 @@ const obtenerID = (req = request, res = response) => {
     role,
   });
 };
-
+ 
 
 module.exports={
     login,
