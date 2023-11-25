@@ -25,10 +25,30 @@ const Usuario= require ("../models/usuario");
       throw new Error (`El usuario ${existeUsuario.name} está inactivo`);  
     }
    };
+
+     //validar si numero habitación ya existe
+  const existeRoom = async (numero)=>{
+    const existeRoom = await Room.findOne({numero})
+    if (existeRoom){
+      throw new Error(`La habitación ${numero} ya existe en la BD.`)
+    }
+  }
+
+  //validar si habitación ya existe
+  const existeRoomPorId = async (id)=>{
+    const existeRoom = await Room.findById(id)
+    if (!existeRoom
+      ){
+      throw new Error(`El id No existe en la BD.`)
+    }
+  }
+
    
     module.exports={
         esRoleValido, 
         emailExiste, 
-        existeUsuarioPorId
+        existeUsuarioPorId,
+        existeRoom,
+        existeRoomPorId,
     }
   
