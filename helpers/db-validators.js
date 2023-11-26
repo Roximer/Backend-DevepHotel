@@ -1,14 +1,13 @@
 const Usuario= require ("../models/usuario");
-const Room = require ("../models/habitacion")
+const Room = require ("../models/habitacion");
+const Categoria = require ('../models/categorias')
 
-
-  const esRoleValido= async(role="USER_ROLE")=>{
-    const existeRole =await Usuario.findOne({role});
-    if(!existeRole){
-      throw new Error (`El rol ${role} no esta registrado en la BD`);
-      }
-    } 
- 
+const esRoleValido = async (role = "USER_ROLE") => {
+  const existeRole = await Role.findOne({ role });
+  if (!existeRole) {
+    throw new Error(`El rol ${role} no está registrado en la BD`);
+  }
+}; 
     
    const emailExiste= async(email)=>{
     const existeEmail= await Usuario.findOne({email})
@@ -44,6 +43,13 @@ const Room = require ("../models/habitacion")
     }
   }
 
+  const categoriaExiste = async (id) => {
+    const existeCategoria = await Categoria.findById(id)
+
+    if(!existeCategoria){
+      throw new Error (`el id ${id} no existe en la BD.`)
+    }
+  }
    
     module.exports={
         esRoleValido, 
@@ -51,5 +57,6 @@ const Room = require ("../models/habitacion")
         existeUsuarioPorId,
         existeRoom,
         existeRoomPorId,
+        categoriaExiste,
     }
   

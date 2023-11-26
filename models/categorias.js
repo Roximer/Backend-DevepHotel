@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose')
 
-const RoomSchema=Schema({
+const CategoriaSchema=Schema({
   numero: {
     type: String,
     required:[true,'el numero de habitacion es obligatorio'],
@@ -18,29 +18,17 @@ const RoomSchema=Schema({
     type: Boolean,
     default: true,
   },
+  foto: {
+    type: String,
+    required: [true],
+  },
   usuario: {
     type: Schema.Types.ObjectId,
     ref: "Usuario",
     required: true,
   },
-  categoria: {
-    type: Schema.Types.ObjectId,
-    ref: "Categoria",
-    required: true,
-  },
-  foto: {
-    type: String,
-    required: [true],
-  },
-  stock: {
-    number: Number,
-  },
+
 });
 
-RoomSchema.methods.toJSON = function () {
-  const { __v, _id, ...room } = this.toObject();
-  room.rid = _id;
-  return room;
-};
 
-module.exports = model('Room', RoomSchema);
+module.exports = model('Categoria', CategoriaSchema);
