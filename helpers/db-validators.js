@@ -1,5 +1,6 @@
-
 const Usuario= require ("../models/usuario");
+const Room = require ("../models/habitacion")
+
 
   const esRoleValido= async(role="USER_ROLE")=>{
     const existeRole =await Usuario.findOne({role});
