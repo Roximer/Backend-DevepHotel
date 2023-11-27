@@ -1,75 +1,127 @@
-const { request, response } = require('express');
-const Room = require('../models/habitacion'); 
+const { response, request } = require("express");
+const Room = require("../models/habitacion");
 
-const roomsGet = async(req = request, res = response) => {
-  const { limite=5, desde=0 } = req.query;
+//Get para traer todos los rooms paginados--------------------
+const obtenerRooms = async (req = request, res = response) => {
+  const { limite = 5, desde = 0 } = req.query;
+  const query = { estado: true };
 
-  //promise.all()agrupar promesas
+  const [total, rooms] = await Promise.all([
+    Room.countDocuments(query),
+    Room.find(query)
+      .skip(Number(desde))
+      .limit(Number(limite))
+      //Como traigo los datos de los usuarios y las categorias?🤔
+      .populate("categoria", "nombre")
+      .populate("usuario", "email"),
+  ]);
 
-  const [total, room] = await Promise.all([
-    Room.countDocuments({availability:true}),
-    Room.find({availability:true}).limit(limite).skip(desde)  
-  ])
-
-  res.status(200).json({
+  res.json({
     total,
-    room
+    rooms,
   });
 };
 
-
-const roomsPost = async (req = request, res = response) => {
-    const tipos= ["SIMPLE","DOBLE","BUNGALOW_FAMILIAR"]
-  
-    const { numero, tipo, precio, disponibilidad, foto } = req.body;
-  
-    if(!tipos.includes(tipo.toUpperCase())){
-      return res.status(401).json({
-        msg:`El tipo de habitación no pertenece a ${tipos}`
-      })
-    }
-    const tipoFinal=tipo.toUpperCase()
-    const room = new Room({ number,tipo:tipoFinal, price, availability, photo }); 
-    
-    await room.save()
-  
-    res.status(201).json({
-        message: "Habitacion creado",
-        room,
-    });
-  }
-const roomsPut = async (req = request, res = response) => {
+//--------------------------------------------------------------
+//obtener un room por su ID
+const obtenerRoom = async (req = request, res = response) => {
   const { id } = req.params;
 
-  const{_id, precio, foto,...resto} = req.body
+  const room = await Room.findById(id)
+    .populate("categoria", "nombre")
+    .populate("usuario", "email");
 
-  await Room.findByIdAndUpdate(id, resto)
-
-  res.status(200).json({
-    message: 'datos habitación actualizados',
-    resto,
+  res.json({
+    room,
   });
-
 };
 
-const roomsDelete = async(req = request, res = response) => {
-const{id}= req.params
+const roomPost = async (req, res) => {
+  const { precio, categoria, descripcion, img, stock } = req.body;
 
-//borrado fisico.
-//const roomBorrada = await Room.findByIdAndDelete(id)
+  const nombre = req.body.nombre.toUpperCase();
 
-//inactivar un documento.
-await Room.findByIdAndUpdate(
-  id, {disponibilidad:false,}, {new:true})
-  
-res.status(200).json({
-    message: 'Rooms eliminada',
+  const roomDB = await Room.findOne({ nombre });
+
+  if (roomDB) {
+    return res.status(400).json({
+      msg: `El room ${roomDB.nombre} ya existe`,
+    });
+  }
+  //Generar la data a guardar
+  const data = {
+    nombre,
+    categoria,
+    precio,
+    descripcion,
+    img,
+    stock,
+    usuario: req.usuario._id,
+  };
+
+  const room = new Room(data);
+
+  //grabar en la base de datos
+  await room.save();
+
+  res.status(201).json({
+    msg: "Se agregó room",
+  });
+};
+
+//actualizarRoom (validar nombre)-----------------------------------------
+
+const actualizarRoom = async (req, res) => {
+  const { id } = req.params;
+  const { precio, categoria, descripcion, disponible, estado } = req.body;
+  const usuario = req.usuario._id;
+
+  let data = {
+    precio,
+    descripcion,
+    categoria,
+    disponible,
+    usuario,
+    estado,
+  };
+
+  if (req.body.nombre) {
+    data.nombre = req.body.nombre.toUpperCase();
+  }
+
+  if (req.body.stock) {
+    data.stock = req.body.stock;
+  }
+  if (req.body.img) {
+    data.img = req.body.img;
+  }
+
+  const room = await Room.findByIdAndUpdate(id, data, { new: true })
+    .populate("categoria", "nombre")
+    .populate("usuario", "email");
+
+  res.status(200).json(room);
+};
+
+//Borrar room-----------------------------------------------------
+const borrarRoom = async (req, res) => {
+  const { id } = req.params;
+
+  const roomBorrado = await Room.findByIdAndUpdate(
+    id,
+    { estado: false },
+    { new: true }
+  );
+
+  res.json({
+    roomBorrado,
   });
 };
 
 module.exports = {
-  roomsGet,
-  roomsPost,
-  roomsPut,
-  roomsDelete,
+  roomPost,
+  obtenerRooms,
+  obtenerRoom,
+  actualizarRoom,
+  borrarRoom,
 };

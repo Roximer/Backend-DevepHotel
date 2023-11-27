@@ -9,7 +9,7 @@ class Server{
       this.authPath="/api/auth";
       this.usuariosPath= "/api/usuarios";
       this.roomsPath = '/api/habitacion';
-      this.categoriasPath = '/api/categorias'
+      this.categoriasPath = '/api/categorias';
       this.conectarDB ();
       this.middlewares();
       this.routes();

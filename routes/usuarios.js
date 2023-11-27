@@ -37,7 +37,7 @@ router.post(
     }),
     check("email", "El email no es válido").isEmail(),
     check("email").custom(emailExiste),
-    check("role").custom(esRoleValido),
+    // check("role").custom(esRoleValido),
     validarCampos,
   ],
   usuarioPost
