@@ -24,7 +24,4 @@ login
 );
 
 
-
-
-
 module.exports= router
