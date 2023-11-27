@@ -10,6 +10,8 @@ class Server{
       this.usuariosPath= "/api/usuarios";
       this.roomsPath = '/api/habitacion';
       this.categoriasPath = '/api/categorias';
+      this.buscarPath = '/api/buscar';
+
       this.conectarDB ();
       this.middlewares();
       this.routes();
@@ -36,6 +38,7 @@ class Server{
       this.app.use(this.usuariosPath ,require("../routes/usuarios"))
       this.app.use(this.roomsPath,require ('../routes/habitacion'))
       this.app.use(this.categoriasPath,require ('../routes/categorias'))
+      this.app.use(this.buscarPath,require ('../routes/buscar'))
 
     }
 

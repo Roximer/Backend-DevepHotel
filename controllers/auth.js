@@ -31,11 +31,11 @@ const login=async (req=request , res=response)=>{
       
       const token = await generarJWT(usuario.id);
 
-
       res.status(200).json({
         usuario,
         token,
       });
+
     } catch (error) {
       console.log(error)  
       res.status(500).json({

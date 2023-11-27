@@ -19,12 +19,12 @@ const RoomSchema=Schema({
     default: true,
   },
   usuario: {
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.ObjectID,
     ref: "Usuario",
     required: true,
   },
   categoria: {
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.ObjectID,
     ref: "Categoria",
     required: true,
   },
