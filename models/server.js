@@ -36,10 +36,14 @@ class Server{
     routes(){
       this.app.use(this.authPath ,require("../routes/auth"))
       this.app.use(this.usuariosPath ,require("../routes/usuarios"))
+
       this.app.use(this.roomsPath,require ('../routes/habitacion'))
       this.app.use(this.categoriasPath,require ('../routes/categorias'))
       this.app.use(this.buscarPath,require ('../routes/buscar'))
 
+
+      //this.app.use(this.habitacionesPath, require("../routes/habitaciones"));
+      //this.app.use(this.reservasPath, require("../routes/reservas"));
     }
 
     listen() {

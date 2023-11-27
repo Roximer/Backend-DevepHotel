@@ -22,7 +22,7 @@ const Categoria = require ('../models/categorias')
     if (!existeUsuario){
       throw new Error (`El id ${id} NO existe `); 
     }
-      //si el usuario existe cerifico su estado
+      //si el usuario existe certifico su estado
     if (!existeUsuario.state) {
       throw new Error (`El usuario ${existeUsuario.name} está inactivo`);  
     }
