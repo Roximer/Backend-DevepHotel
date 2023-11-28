@@ -35,9 +35,10 @@ router.post(
     check("password", "La contraseña debe tener más de 6 caracteres").isLength({
       min: 6,
     }),
+    check("dni", "El dni es obligatorio").notEmpty(),
     check("email", "El email no es válido").isEmail(),
     check("email").custom(emailExiste),
-    // check("role").custom(esRoleValido),
+    check("role").custom(esRoleValido),
     validarCampos,
   ],
   usuarioPost

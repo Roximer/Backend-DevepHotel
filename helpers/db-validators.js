@@ -1,7 +1,6 @@
-const Role = require ('../models/role');
 const Usuario= require ("../models/usuario");
-const Room = require ("../models/habitacion");
-const Categoria = require ('../models/categorias')
+const Habitacion = require ("../models/habitacion");
+
 
   const esRoleValido= async(role="USER_ROLE")=>{
     const existeRole =await Usuario.findOne({role});
@@ -28,28 +27,17 @@ const Categoria = require ('../models/categorias')
     }
    }; 
 
-   //validar categoria por id
-   const categoriaExiste = async (id) =>{
-    const existeCategoria = await Categoria.findById(id)
-    if (!existeCategoria){
-      throw new Error (`El id ${id} no existe en la bd`)
-    }
-    if(!existeCategoria.estado){
-      throw new Error (`La categoría ${existeCategoria.nombre} está inactiva`)
-    }
-   }
-
      //validar si numero habitación ya existe
-  const roomExiste = async (numero)=>{
-    const existeRoom = await Room.findOne({numero})
+  const roomExiste = async (numroom)=>{
+    const existeRoom = await Habitacion.findOne({numroom})
     if (existeRoom){
-      throw new Error(`La habitación ${numero} ya existe en la BD.`)
+      throw new Error(`La habitación ${numroom} ya existe en la BD.`)
     }
   }
 
   //validar si habitación ya existe
   const existeRoomPorId = async (id)=>{
-    const existeRoom = await Room.findById(id)
+    const existeRoom = await Habitacion.findById(id)
     if (!existeRoom
       ){
       throw new Error(`El id No existe en la BD.`)
@@ -62,6 +50,6 @@ const Categoria = require ('../models/categorias')
         existeUsuarioPorId,
         roomExiste,
         existeRoomPorId,
-        categoriaExiste,
+        
     }
   

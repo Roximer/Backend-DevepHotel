@@ -1,46 +1,39 @@
-const {Schema, model} = require('mongoose')
+const{Schema,model}= require("mongoose");
 
-const RoomSchema=Schema({
-  numero: {
-    type: String,
-    required:[true,'el numero de habitacion es obligatorio'],
-    unique:true,
-  },
-  tipo: {
-    type:String,
-    enum:["SIMPLE","DOBLE","BUNGALOW_FAMILIAR"],
-  },
-  precio: {
-    type: Number,
-    required:[true],
-  },
-  disponibilidad: {
-    type: Boolean,
-    default: true,
-  },
-  usuario: {
-    type: Schema.Types.ObjectID,
-    ref: "Usuario",
-    required: true,
-  },
-  categoria: {
-    type: Schema.Types.ObjectID,
-    ref: "Categoria",
-    required: true,
-  },
-  foto: {
-    type: String,
-    required: [true],
-  },
-  stock: {
-    number: Number,
-  },
-});
+const HabitacionSchema=Schema({
 
-RoomSchema.methods.toJSON = function () {
-  const { __v, _id, ...room } = this.toObject();
-  room.rid = _id;
-  return room;
-};
+    numroom:{
+        type: Number,
+        required:[ true, "El número de la habitación es obligatorio"],
+        unique: true,      
+    },
+    
+    typeroom:{
+        type: String,
+        enum:["SIMPLE","DOBLE","BUNGALOW_FAMILIAR"],
+        default: "SINGLE",  
+    },
 
-module.exports = model('Room', RoomSchema);
+    photo:{
+        type:String, 
+    },
+
+    price:{
+        type:Number,
+        required:[ true, "El precio por noche es obligatorio"],
+        default: 0,
+    },
+
+    available: {
+        type: Boolean,
+        default: true,
+      }, 
+
+    state:{ 
+        type: Boolean,
+        default: true, 
+     }    
+})
+
+
+module.exports=model("Habitacion",HabitacionSchema);
