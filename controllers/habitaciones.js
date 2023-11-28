@@ -84,15 +84,15 @@ const obtenerHabitaciones = async (req = request, res = response) => {
   const borrarHabitacion = async (req, res) => {
     const { id } = req.params;
   
-    const habitacionBorrada = await Habitacion.findByIdAndUpdate(
-      id,
+    const habitacionBorrada = await Habitacion.findByIdAndUpdate( id,
       { state: false },
       { new: true }
     );
   
-    res.json({
+    res.status(200).json({
+      message:"Habitación  eliminada",
       habitacionBorrada,
-    });
+     });
   };
   
   module.exports = {
