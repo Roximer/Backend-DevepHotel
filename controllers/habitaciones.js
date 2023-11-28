@@ -76,7 +76,7 @@ const obtenerHabitaciones = async (req = request, res = response) => {
     const habitacion = await Habitacion.findByIdAndUpdate(id, data, { new: true })
     res.status(200).json({
         message:"Habitación actualizada",
-        habitacion,
+        habitacion
        });  
      };
   
@@ -86,7 +86,7 @@ const obtenerHabitaciones = async (req = request, res = response) => {
   
     const habitacionBorrada = await Habitacion.findByIdAndUpdate(
       id,
-      { estado: false },
+      { state: false },
       { new: true }
     );
   
