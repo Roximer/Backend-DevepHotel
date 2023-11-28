@@ -3,7 +3,7 @@ const Habitacion= require ("../models/habitacion");
 
 const obtenerHabitaciones = async (req = request, res = response) => {
     //const { limite = 5, desde = 0 } = req.query;
-    const query = { estado: true };
+    const query = { state: true };
   
     const [total, habitaciones] = await Promise.all([
       Habitacion.countDocuments(query),
@@ -17,7 +17,7 @@ const obtenerHabitaciones = async (req = request, res = response) => {
   
     res.json({
       total,
-      habitaciones,
+      habitaciones
     });
   };
   
@@ -28,7 +28,7 @@ const obtenerHabitaciones = async (req = request, res = response) => {
     const habitacion = await Habitacion.findById(id)
       
     res.json({
-      habitacion,
+      habitacion
     });
   };
   
