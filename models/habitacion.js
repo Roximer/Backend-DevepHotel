@@ -18,6 +18,11 @@ const HabitacionSchema=Schema({
         type:String, 
     },
 
+    description:{
+        type : String,
+        required :[ true, "La descripción es obligatoria"],
+    },
+
     price:{
         type:Number,
         required:[ true, "El precio por noche es obligatorio"],
@@ -32,7 +37,13 @@ const HabitacionSchema=Schema({
     state:{ 
         type: Boolean,
         default: true, 
-     }    
+    },
+    
+    usuario: {
+        type:Schema.Types.ObjectId,
+        ref: "Usuario",
+        required: true,
+      },
 })
 
 

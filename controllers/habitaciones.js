@@ -1,5 +1,6 @@
 const{request, response} = require("express");
 const Habitacion= require ("../models/habitacion");
+//const Usuario= require ("../models/usuario")
 
 const obtenerHabitaciones = async (req = request, res = response) => {
     //const { limite = 5, desde = 0 } = req.query;
@@ -33,7 +34,7 @@ const obtenerHabitaciones = async (req = request, res = response) => {
   };
   
   const habitacionPost = async (req, res) => {
-    const { numroom, typeroom, price,photo, available, state } = req.body;
+    const { numroom, typeroom, price,photo,description, available,state } = req.body;
   
     
     //Generar la data a guardar
@@ -42,8 +43,10 @@ const obtenerHabitaciones = async (req = request, res = response) => {
         typeroom,
         price,
         photo,
+        description,
         available,
         state,
+        usuario: req.usuario._id,
     };
   
     const habitacion = new Habitacion(data);
@@ -61,19 +64,24 @@ const obtenerHabitaciones = async (req = request, res = response) => {
   
   const actualizarHabitacion = async (req, res) => {
     const { id } = req.params;
-    const { numroom, typeroom, price,photo, available, state } = req.body;
-   // const usuario = req.usuario._id;
-  
-    let data = {
+    const numroom = req.body.numroom
+    const usuario = req.usuario._id;
+    const datos = {
+     numroom,
+     usuario,
+  };
+    
+    /* let data = {
       numroom,
       typeroom,
       price,
       photo,
+      description,
       available,
       state,
-    };
+    }; */
   
-    const habitacion = await Habitacion.findByIdAndUpdate(id, data, { new: true })
+    const habitacion = await Habitacion.findByIdAndUpdate(id, datos, { new: true })
     res.status(200).json({
         message:"Habitación actualizada",
         habitacion
@@ -84,13 +92,14 @@ const obtenerHabitaciones = async (req = request, res = response) => {
   const borrarHabitacion = async (req, res) => {
     const { id } = req.params;
   
-    const habitacionBorrada = await Habitacion.findByIdAndUpdate( id,
+    const habitacionBorrada = await Habitacion.findByIdAndUpdate( 
+      id,
       { state: false },
       { new: true }
     );
   
     res.status(200).json({
-      message:"Habitación  eliminada",
+      message:"Habitación en mantenimiento",
       habitacionBorrada,
      });
   };

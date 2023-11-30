@@ -2,8 +2,8 @@ const { Router } = require("express");
 const { check } = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const { validarJWT } = require("../middlewares/validar-jwt");
-const { esAdminRole, tieneRol } = require("../middlewares/validar-role");
-const { existeRoomPorId , roomExiste }= require("../helpers/db-validators")
+const { esAdminRole } = require("../middlewares/validar-role");
+const { existeRoomPorId, roomExiste  }= require("../helpers/db-validators")
 
 const {
     habitacionPost,
@@ -32,10 +32,12 @@ const {
     "/",
     [
       validarJWT,
-      esAdminRole,
+      esAdminRole, 
       check("numroom", "El número de habitación es obligatorio").notEmpty(),
       check("available", "La disponibilidad es obligatoria").notEmpty(),
       check("typeroom", "La tipo de habitación es obligatoria").notEmpty(),
+      check("description", "La descripción de la habitación es obligatoria").notEmpty(),
+      //check("numroom").custom(roomExiste),
       validarCampos,
     ],
     habitacionPost
