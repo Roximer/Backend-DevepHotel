@@ -14,7 +14,7 @@ const {
   usuarioPost,
   usuarioPut,
   usuarioDelete,
- // getUserById,
+  getUserById,
 } = require("../controllers/usuarios");
 
 const router = Router();
@@ -29,15 +29,16 @@ router.get(
   usuariosGet
 );
 
- /* router.get(
+router.get(
   "/:id",
   [
     validarJWT,
     check("id", "No es un Id válido").isMongoId(),
+    // check("id").custom(existeUsuarioPorId),
     validarCampos,
-  ],  */
-  //getUserById
-//); 
+  ],
+  getUserById
+);
 
 router.post(
   "/",
@@ -49,7 +50,7 @@ router.post(
     check("dni", "El dni es obligatorio").notEmpty(),
     check("email", "El email no es válido").isEmail(),
     check("email").custom(emailExiste),
-    check("role").custom(esRoleValido),
+    // check("role").custom(esRoleValido),
     validarCampos,
   ],
   usuarioPost
@@ -59,8 +60,8 @@ router.put(
   [
     validarJWT,
     check("id", "No es un Id válido").isMongoId(),
-    check("id").custom(existeUsuarioPorId),
-    check("role").custom(esRoleValido),
+    // check("id").custom(existeUsuarioPorId),
+    // check("role").custom(esRoleValido),
     validarCampos,
   ],
   usuarioPut
@@ -79,4 +80,3 @@ router.delete(
 );
 
 module.exports = router;
-
