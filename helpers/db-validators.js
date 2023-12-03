@@ -41,16 +41,18 @@ const Role = require("../models/role");
     const existeRoom = await Habitacion.findById(id)
     if (!existeRoom
       ){
-      throw new Error(`El id No existe en la BD.`)
+      throw new Error(`El id de Habitacion No existe en la BD.`)
     }
   }
-   
+
+    
     module.exports={
         esRoleValido, 
         emailExiste, 
         existeUsuarioPorId,
         roomExiste,
         existeRoomPorId,
+        
         
     }
   
