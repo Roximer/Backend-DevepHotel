@@ -1,11 +1,11 @@
 const{request, response} = require("express");
-const bcryptjs = require('bcryptjs');
+const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Usuario= require ("../models/usuario");
 const { generarJWT } = require("../helpers/generar-jwt");
 
 
-const login=async (req=request , res=response)=>{
+const login = async (req=request , res=response)=>{
    const{ email,password}=req.body;
     try {
       //verificar si el email existe
