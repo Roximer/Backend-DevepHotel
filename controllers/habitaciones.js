@@ -64,10 +64,12 @@ const obtenerHabitaciones = async (req = request, res = response) => {
   
   const actualizarHabitacion = async (req, res) => {
     const { id } = req.params;
-    const numroom = req.body.numroom
+    const numroom = req.body.numroom;
     const usuario = req.usuario._id;
+    const price = req.body.price;
     const datos = {
      numroom,
+     price,
      usuario,
   };
     
