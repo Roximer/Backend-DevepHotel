@@ -11,7 +11,7 @@ const HabitacionSchema=Schema({
     typeroom:{
         type: String,
         enum:["SIMPLE","DOBLE","BUNGALOW_FAMILIAR"],
-        default: "SINGLE",  
+        default: "SIMPLE",  
     },
 
     photo:{
